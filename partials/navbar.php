@@ -12,28 +12,26 @@
             <div class="d-flex justify-content-center w-100">
                 <ul class="nav nav-underline mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="home.php">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="add.php">Nueva Tarea</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Por Hacer</a>
+                        <a class="nav-link" href="toDoTasks.php">Por Hacer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Tareas en Proceso</a>
+                        <a class="nav-link" href="pastTasks.php">Tareas Atrasadas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Tareas Acabadas</a>
+                        <a class="nav-link" href="completeTask.php">Tareas Acabadas</a>
                     </li>
                 </ul>
                 <ul class="nav">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" >Usuario</a>
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" ><?= $_SESSION["user"]["userNAme"] ?></a>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">Ajustes de cuenta</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                            <li><a class="dropdown-item" href="logout.php">Cerrar Sesion</a></li>
                         </ul>
                     </li>
                 </ul>

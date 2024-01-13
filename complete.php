@@ -20,10 +20,12 @@ if ($statement->rowCount() == 0) {
   return;
 }
 
-//ELIMINAMOS EL ROW CON EL ID DE LA TARGETA SELECCIONADA, nos ahorramos dos statement y ejecutamos en la misma linea
-$conn->prepare("DELETE FROM tasks WHERE id = :id")->execute([":id" => $id]);
+//preparamos una sentencia SQL
+$statement = $conn->prepare("UPDATE tasks SET tasState = 'Complete' WHERE id = :id");
+//sanitizamos los datos para evitar inyecciones SQL
+$statement->execute([":id" => $id]);
 //mensaje flash de eliminar
-$_SESSION["flash"] = ["message" => "Tarea eliminada."];
+$_SESSION["flash"] = ["message" => "Tarea Completada."];
 //REDIRIGIMOS al home
 header("Location: home.php");
 //acabamos el codigo aqui porque ya nos redirige al home, y si dejamos que el codigo siga ejecutandose entonces no aparecera el mensaje flash

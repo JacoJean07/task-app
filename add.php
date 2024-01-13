@@ -11,6 +11,7 @@ if (!isset($_SESSION["user"])) {
 
 //declaramos la variable error que nos ayudara a mostrar errores, etc.
 $error = null;
+$state = "Uncomplete";
 
 //verificamos el metodo que usa el form con un if
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date = $_POST["date"];
     $priority = $_POST["priority"];
     $description = $_POST["description"];
-    $estado = $_POST["estado"];
+    $estado = $state;
 
     //preparamos una sentencia SQL
     $statement = $conn->prepare("INSERT INTO tasks (user_id, tasName, tasDate, tasPriority, tasDescription, tasState) VALUES ({$_SESSION['user']['id']}, :name, :date, :priority, :description, :estado)");
@@ -32,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $statement->bindParam(":date", $_POST["date"]);
     $statement->bindParam(":priority", $_POST["priority"]);
     $statement->bindParam(":description", $_POST["description"]);
-    $statement->bindParam(":estado", $_POST["estado"]);
+    $statement->bindParam(":estado", $state);
     //ejecutamos
     $statement->execute();
     //redirigimos a el home.php
@@ -80,9 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="input-group">
           <span class="input-group-text">Descripcion</span>
           <textarea class="form-control" aria-label="description" id="description" name="description" required autocomplete="description" autofocus></textarea>
-        </div>
-        <div class="input-group">
-          <input type="hidden" value="No Completado" class="form-control" id="estado" name="estado" required autocomplete="estado" autofocus>
         </div>
         <div class="mt-3 row">
           <div class="">

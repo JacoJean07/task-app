@@ -11,7 +11,7 @@ if (!isset($_SESSION["user"])) {
 }
 
 //llamar los contactos de la base de datos y especificar que sean los que tengan el user_id de la funcion sesion_start
-$tasks = $conn->query("SELECT * FROM tasks WHERE user_id = {$_SESSION['user']['id']} AND tasState = 'Uncomplete' AND DATE(tasDate) = CURDATE() ORDER BY tasPriority ASC");
+$tasks = $conn->query("SELECT * FROM tasks WHERE user_id = {$_SESSION['user']['id']} AND tasState = 'Uncomplete' AND DATE(tasDate) < CURDATE() ORDER BY tasPriority ASC");
 
 ?>
 
@@ -27,7 +27,7 @@ $tasks = $conn->query("SELECT * FROM tasks WHERE user_id = {$_SESSION['user']['i
     <?php if ($tasks->rowCount() == 0): ?>
       <div class= "col-md-4 mx-auto">
         <div class= "card card-body text-center">
-          <p>No hay tareas por el momento</p>
+          <p>No hay tareas atrasadas por el momento</p>
           <a href="add.php">Agrega una!</a>
         </div>
       </div>

@@ -2,12 +2,18 @@
 
 require "database.php";
 
+session_start();
+//si la sesion no existe, mandar al login.php y dejar de ejecutar el resto; se puede hacer un required para ahorra codigo
+if (!isset($_SESSION["user"])) {
+  header("Location: login.php");
+  return;
+}
 //declaramos la variable error que nos ayudara a mostrar errores, etc.
 $error = null;
 //obtenemos el id para trabajar con ese row
 $id = $_GET["id"];
 //preparamos la sentencia SQL
-$statement = $conn->prepare("SELECT * FROM tasks WHERE id = :id");
+$statement = $conn->prepare("SELECT * FROM tasks WHERE id = :id AND user_id = {$_SESSION['user']['id']} LIMIT 1");
 $statement->execute([":id"=>$id]);
 
 //COMPROBAMOS QUE EL ID EXISTA, EN CASO DE QUE EL USUARIO NO SEA UN NAVEGADOR, Y SI NO EXISTE EL ID MANDAMOS UN ERROR
@@ -46,6 +52,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       ":description" => $_POST["description"],
       ":estado" => $_POST["estado"],
     ]);
+    //mensaje flash par edit
+    $_SESSION["flash"] = ["message" => "Tarea: {$_POST['name']} edit."];
+
     //redirigimos a el index.php
     header("Location: index.php");
     return;

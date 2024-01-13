@@ -11,10 +11,9 @@ if (!isset($_SESSION["user"])) {
 }
 
 //llamar los contactos de la base de datos y especificar que sean los que tengan el user_id de la funcion sesion_start
-$tasks = $conn->query("SELECT * FROM tasks WHERE user_id = {$_SESSION['user']['id']} AND tasState = 'Uncomplete' AND DATE(tasDate) = CURDATE() ORDER BY tasPriority ASC");
+$tasks = $conn->query("SELECT * FROM tasks WHERE user_id = {$_SESSION['user']['id']} AND tasState = 'Complete'");
 
 ?>
-
 
 
 <?php require ('partials/header.php');?>
@@ -27,7 +26,7 @@ $tasks = $conn->query("SELECT * FROM tasks WHERE user_id = {$_SESSION['user']['i
     <?php if ($tasks->rowCount() == 0): ?>
       <div class= "col-md-4 mx-auto">
         <div class= "card card-body text-center">
-          <p>No hay tareas por el momento</p>
+          <p>No hay tareas terminadas por el momento</p>
           <a href="add.php">Agrega una!</a>
         </div>
       </div>
@@ -48,19 +47,7 @@ $tasks = $conn->query("SELECT * FROM tasks WHERE user_id = {$_SESSION['user']['i
       </div>
         <div class="card-body">
           <h6 class="card-subtitle mb-2 text-body-secondary"> <?= $task["tasDate"]?> </h6>
-          <p class="card-subtitle mb-2 text-body-secondary">Prioridad: 
-            <!-- determinar la prioridad segun el valor -->
-            <?php if ($task["tasPriority"] == 1) : ?>
-              Alta
-            <?php elseif ($task["tasPriority"] == 2) : ?>
-              Media
-            <?php else : ?>
-              Baja
-            <?php endif ?>
-          </p>
           <h4 class="card-text"> <?= $task["tasDescription"]?></h4>
-          <a href="edit.php?id=<?= $task["id"]?>" class="btn btn-primary">Editar Tarea</a>
-          <a href="complete.php?id=<?= $task["id"]?>" class="btn btn-info">Completada!</a>
         </div>
       </div>
     </div>
