@@ -21,6 +21,7 @@ $tasks = $conn->query("SELECT * FROM tasks WHERE user_id = {$_SESSION['user']['i
 
 
 <div class="container pt-4 p-3">
+  <?php require("./partials/msgFlash.php"); ?>
   <div class="row">
 
     <!-- si el array asociativo $tasks no tiene nada dentro, entonces imprimir el siguiente div -->
